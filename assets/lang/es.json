@@ -1,0 +1,65 @@
+{
+  "onboarding.reserva.title": "Reservas Online",
+  "onboarding.reserva.description": "Aqui va la descripción de lo que se va a poner en la reserva",
+
+  "onboarding.recordatorio.title": "Recordatorios",
+  "onboarding.recordatorio.description": "Aqui va la descripción de lo que se va a poner en los Recordatorios",
+
+  "onboarding.integration.title": "Integraciones",
+  "onboarding.integration.description": "Aqui va la descripción de lo que se va a poner en las Integraciones",
+
+  "onboarding.control.skip": "Saltar",
+  "onboarding.control.done": "Listo",
+
+  "login.wellcome": "Bienvenidos",
+  "login.email": "Correo electrónico",
+  "login.password": "Contraseña",
+  "login.signin": "Acceder",
+  "login.signup": "Registrarse",
+  "login.forgotpassword": "Olvido su contraseña?",
+  "login.or": "o",
+  "login.input.email": "Por favor, Introduzca un correo electrónico",
+  "login.validation.email": "Por favor, Introduzca un correo electrónico válido",
+  "login.input.password": "Por favor, Introduzca una contraseña",
+  "login.validation.password": "La longitud debe estar entre 8 y 20 dígitos",
+  "login.validation.unauthorized": "El email o la contraseña no coincide, Intente de nuevo",
+
+  "forgot.password.title": "Recuperar contraseña",
+  "forgot.input.password": "Contraseña",
+  "forgot.input.password.confirm": "Confirmar Contraseña",
+  "forgot.validation.same.password": "Las contraseñas no coinciden",
+  "forgot.success.title": "Listo!",
+  "forgot.success.created": "Se ha generado un enlace satisfactoriamente",
+  "forgot.success.login": "Autenticarme",
+  "forgot.success.description": "Se le ha enviado un correo electrónico con el enlace para cambiar su contraseña.",
+
+  "register.client": "Cliente",
+  "register.business": "Negocio",
+  "register.title": "Registrarse",
+  "register.name": "Nombre",
+  "register.email": "Correo electrónico",
+  "register.password": "Contraseña",
+  "register.account": "¿Ya tienes una cuenta?",
+  "register.validation.name": "Por favor, Introduzca un nombre",
+  "register.validation.name.length": "La longitud debe estar entre 4 y 20 caracteres",
+  "register.validation.same.email": "El email ya se encuentra en uso",
+  "register.success.title": "Bienvenido!",
+  "register.success.created": "Su cuenta se ha creado satisfactoriamente",
+  "register.success.login": "Acceder",
+  "register.success.description": "Por favor, una vez dentro de la plataforma active su cuenta con el código que se le envio por correo electrónico",
+
+  "profile.edit": "Editar perfil",
+  "profile.option": "Opciones",
+  "profile.notifications": "Notificaciones",
+  "profile.language": "Idiomas",
+  "profile.account": "Cuenta",
+  "profile.information": "Información personal",
+  "profile.logout": "Desloguearse",
+  "profile.lang.spanish": "Español",
+  "profile.lang.english": "Ingles",
+
+  "logout.title": "¿Desea salir del sistema?",
+  "logout.cancel": "Cancelar",
+  "logout.accept": "Si, lo deseo"
+
+}

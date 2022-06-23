@@ -1,0 +1,65 @@
+{
+  "onboarding.reserva.title": "Online Booking",
+  "onboarding.reserva.description": "Here is the description of what is going to be put in the reserve",
+
+  "onboarding.recordatorio.title": "Reminders",
+  "onboarding.recordatorio.description": "Here is the description of what is going to be put in the Reminders",
+
+  "onboarding.integration.title": "Integrations",
+  "onboarding.integration.description": "Here is the description of what is going to be put in the Integrations",
+
+  "onboarding.control.skip": "Skip",
+  "onboarding.control.done": "Ready",
+
+  "login.wellcome": "Welcome",
+  "login.email": "Email",
+  "login.password": "Password",
+  "login.signin": "SignIn",
+  "login.signup": "SignUp",
+  "login.forgotpassword": "Forgot your password?",
+  "login.or": "o",
+  "login.input.email": "Please, enter an e-mail",
+  "login.validation.email": "Please, enter a valid e-mail",
+  "login.input.password": "Please, enter a password",
+  "login.validation.password": "The length must be between 8 and 20 digits",
+  "login.validation.unauthorized": "The email or password does not match, please try again",
+
+  "forgot.password.title": "Recover password",
+  "forgot.input.password": "Password",
+  "forgot.input.password.confirm": "Confirm Password",
+  "forgot.validation.same.password": "Passwords do not match",
+  "forgot.success.title": "Ready!",
+  "forgot.success.created": "A link has been generated successfully",
+  "forgot.success.login": "SignIn",
+  "forgot.success.description": "An email has been sent to you with the link to change your password.",
+
+  "register.client": "Customer",
+  "register.business": "Provider",
+  "register.title": "Check in",
+  "register.name": "Name",
+  "register.email": "E-mail",
+  "register.password": "Password",
+  "register.account": "¿Do you already have an account?",
+  "register.validation.name": "Please, enter a name",
+  "register.validation.name.length": "The length must be between 4 and 20 characters",
+  "register.validation.same.email": "The email is already in use",
+  "register.success.title": "Wellcome!",
+  "register.success.created": "Your account has been successfully created",
+  "register.success.login": "LogIn",
+  "register.success.description": "Please, once inside the platform, activate your account with the code that was sent to you by email.",
+
+  "profile.edit": "Edit profile",
+  "profile.option": "Options",
+  "profile.notifications": "Notifications",
+  "profile.language": "Languages",
+  "profile.account": "Account",
+  "profile.information": "Personal Information",
+  "profile.logout": "Logout",
+  "profile.lang.spanish": "Spanish",
+  "profile.lang.english": "English",
+
+  "logout.title": "¿Do you want to logout?",
+  "logout.cancel": "Cancel",
+  "logout.accept": "Yes, i wish"
+
+}
