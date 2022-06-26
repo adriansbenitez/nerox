@@ -1,69 +1,39 @@
-/*
-* File : Main File
-* Version : 1.0.0
-* Author : Adrian Sosa Benitez
-* */
-
-import 'package:nerox/theme/app_notifier.dart';
-import 'package:nerox/theme/app_theme.dart';
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutx/themes/app_theme_notifier.dart';
-import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/widgets.dart';
+import 'package:listar_flutter_pro/app.dart';
+import 'package:listar_flutter_pro/utils/utils.dart';
 
-import 'binding/root_binding.dart';
-import 'features/boostrap/view/onboarding_screen.dart';
-import 'localizations/app_localization_delegate.dart';
-import 'localizations/language.dart';
-
-Future<void> main() async {
-  //You will need to initialize AppThemeNotifier class for theme changes.
-  WidgetsFlutterBinding.ensureInitialized();
-
-  AppTheme.init();
-
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  runApp(ChangeNotifierProvider<AppNotifier>(
-    create: (context) => AppNotifier(),
-    child: ChangeNotifierProvider<FxAppThemeNotifier>(
-      create: (context) => FxAppThemeNotifier(),
-      child: MyApp(),
-    ),
-  ));
-}
-
-class MyApp extends StatelessWidget {
-  MyApp() {}
+class AppBlocObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    UtilLogger.log('BLOC ONCHANGE', change);
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<AppNotifier>(
-      builder: (BuildContext context, AppNotifier value, Widget? child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialBinding: RootBinding(),
-          theme: AppTheme.theme,
-          builder: (context, child) {
-            return Directionality(
-              textDirection: AppTheme.textDirection,
-              child: child!,
-            );
-          },
-          localizationsDelegates: [
-            AppLocalizationsDelegate(context),
-            // Add this line
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: Language.getLocales(),
-          home: OnboardingScreen(),
-        );
-      },
-    );
+  void onEvent(Bloc bloc, Object? event) {
+    UtilLogger.log('BLOC EVENT', event);
+    super.onEvent(bloc, event);
   }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    UtilLogger.log('BLOC ERROR', error);
+    super.onError(bloc, error, stackTrace);
+  }
+
+  @override
+  void onTransition(Bloc bloc, Transition transition) {
+    UtilLogger.log('BLOC TRANSITION', transition);
+    super.onTransition(bloc, transition);
+  }
+}
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  BlocOverrides.runZoned(
+    () => runApp(const App()),
+    blocObserver: AppBlocObserver(),
+  );
 }
