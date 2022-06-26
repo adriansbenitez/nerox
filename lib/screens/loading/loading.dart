@@ -34,7 +34,10 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Image.asset(Images.logo),
+                Image.asset(
+                    Images.logo,
+                    width: 350,
+                ),
               ],
             ),
           ),

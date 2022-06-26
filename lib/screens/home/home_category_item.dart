@@ -53,8 +53,8 @@ class HomeCategoryItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 36,
-              height: 36,
+              width: 50,
+              height: 50,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -62,7 +62,7 @@ class HomeCategoryItem extends StatelessWidget {
               ),
               child: FaIcon(
                 item!.icon,
-                size: 18,
+                size: 25,
                 color: Colors.white,
               ),
             ),

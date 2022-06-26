@@ -32,6 +32,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
             child: Card(
               margin: const EdgeInsets.all(0),
               shape: RoundedRectangleBorder(
+                side: BorderSide(color: Theme.of(context).primaryColor, width: 8),
                 borderRadius: BorderRadius.circular(12),
               ),
               elevation: 5,

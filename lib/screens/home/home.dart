@@ -99,9 +99,9 @@ class _HomeState extends State<Home> {
   Widget _buildCategory(List<CategoryModel>? category) {
     ///Loading
     Widget content = Wrap(
-      runSpacing: 8,
+      runSpacing: 4,
       alignment: WrapAlignment.center,
-      children: List.generate(8, (index) => index).map(
+      children: List.generate(4, (index) => index).map(
         (item) {
           return const HomeCategoryItem();
         },
@@ -114,11 +114,11 @@ class _HomeState extends State<Home> {
         "term_id": -1,
         "name": Translate.of(context).translate("more"),
         "icon": "fas fa-ellipsis",
-        "color": "#ff8a65",
+        "color": "#1c4c72",
       });
 
-      if (category.length >= 7) {
-        listBuild = category.take(7).toList();
+      if (category.length >= 3) {
+        listBuild = category.take(3).toList();
         listBuild.add(more);
       }
 
@@ -131,7 +131,7 @@ class _HomeState extends State<Home> {
               item: item,
               onPressed: (item) {
                 if (item.id == -1) {
-                  _onOpenMore(context, category: listBuild);
+                  _onOpenMore(context, category: category);
                 } else {
                   _onTapService(item);
                 }
@@ -141,9 +141,8 @@ class _HomeState extends State<Home> {
         ).toList(),
       );
     }
-
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(25),
       child: content,
     );
   }

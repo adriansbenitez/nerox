@@ -83,12 +83,12 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     }
 
     ///Setup Theme & Font with dark Option
-    AppBloc.themeCubit.onChangeTheme(
+    /*AppBloc.themeCubit.onChangeTheme(
       theme: theme,
       font: font,
       darkOption: darkOption,
       textScaleFactor: oldTextScale,
-    );
+    );*/
 
     ///Start location service
     AppBloc.locationCubit.onLocationService();
