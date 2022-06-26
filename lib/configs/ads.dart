@@ -3,7 +3,7 @@ import 'dart:io';
 class Ads {
   static String get appId {
     if (Platform.isAndroid) {
-      return "ca-app-pub-8318136058462894~6986590261";
+      return "ca-app-pub-2914947253149403~9998693570";
     } else if (Platform.isIOS) {
       return "ca-app-pub-8318136058462894~7546839370";
     } else {
