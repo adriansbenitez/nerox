@@ -27,7 +27,16 @@ class ImageModel {
     return ImageModel(
       id: json['id'] ?? 0,
       thumb: json['media_details']['sizes']['thumbnail']['source_url'] ?? '',
-      full: json['media_details']['sizes']['full']['source_url'] ?? '',
+      full:
+          json['media_details']['sizes']['full']['source_url']['result'] ?? '',
+    );
+  }
+
+  factory ImageModel.fromDataImage(String pathUrl) {
+    return ImageModel(
+      id: 0,
+      thumb: '',
+      full: pathUrl,
     );
   }
 }

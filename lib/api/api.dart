@@ -1,14 +1,23 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:listar_flutter_pro/api/http_manager.dart';
 import 'package:listar_flutter_pro/models/model.dart';
+import 'package:listar_flutter_pro/models/model_customer.dart';
 import 'package:listar_flutter_pro/utils/utils.dart';
+
+import '../models/model_change_image.dart';
 
 class Api {
   static final httpManager = HTTPManager();
 
   ///URL API
-  static const String login = "/jwt-auth/v1/token";
+  static const String login = "/api/auth/login";
+  static const String customer = "/api/customers";
+  static const String customerChangeImage = "/api/gateway/media";
+
+  /*DEPRECATED*/
   static const String authValidate = "/jwt-auth/v1/token/validate";
   static const String user = "/listar/v1/auth/user";
   static const String register = "/listar/v1/auth/register";
@@ -41,12 +50,53 @@ class Api {
   static const String bookingDetail = "/listar/v1/booking/view";
   static const String bookingList = "/listar/v1/booking/list";
   static const String bookingCancel = "/listar/v1/booking/cancel_by_id";
+  /*DEPRECATED*/
 
   ///Login api
   static Future<ResultApiModel> requestLogin(params) async {
     final result = await httpManager.post(url: login, data: params);
     return ResultApiModel.fromJson(result);
   }
+
+  static Future<CustomerModel> getCustomer(int userId) async {
+    final result = await httpManager.get(url: "$customer?user_id=$userId");
+    return CustomerModel.fromJson(result['response'][0]);
+  }
+
+  static Future<ResultApiModel> updateCustomer(customerId, params) async {
+    final result = await httpManager.post(
+      url: "$customer/$customerId/edit",
+      data: params,
+      loading: true,
+    );
+    final convertResponse = {
+      "success": result['message'] == "Succesfuly update customer!",
+      "message": result['code'] ?? "update_info_success",
+      "data": result['response']
+    };
+    return ResultApiModel.fromJson(convertResponse);
+  }
+
+  static Future<ResultApiModel> requestChangeImage(file, sourceType, sourceId, progress) async {
+    Uint8List imagebytes = await file.readAsBytes();
+    final changeImageRequest = ChangeImageModel(
+        sourceType: sourceType,
+        sourceId: sourceId,
+        profileImage: base64.encode(imagebytes)
+    );
+
+    var result = await httpManager.post(
+      url: customerChangeImage,
+      data: json.encode(changeImageRequest.toJson()),
+      progress: progress,
+    );
+
+    final convertResponse = {"success": result['message'] == "Success", "data": result['response']['img_url'], "message" : "Save successfully"};
+    return ResultApiModel.fromJson(convertResponse);
+  }
+
+
+  /*DEPRECATED*/
 
   ///Validate token valid
   static Future<ResultApiModel> requestValidateToken() async {
@@ -348,6 +398,8 @@ class Api {
     );
     return ResultApiModel.fromJson(result);
   }
+
+  /*DEPRECATED*/
 
   ///Singleton factory
   static final Api _instance = Api._internal();

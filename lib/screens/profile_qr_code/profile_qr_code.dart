@@ -111,7 +111,7 @@ class _ProfileQRCodeState extends State<ProfileQRCode>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: NetworkImage(widget.user.image),
+                          image: NetworkImage(widget.user.profileImage),
                           fit: BoxFit.cover,
                         ),
                       ),

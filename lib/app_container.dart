@@ -22,12 +22,12 @@ class _AppContainerState extends State<AppContainer> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.onMessage.listen((message) {
+    /*FirebaseMessaging.onMessage.listen((message) {
       _notificationHandle(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       _notificationHandle(message);
-    });
+    });*/
   }
 
   ///check route need auth

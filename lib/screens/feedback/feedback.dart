@@ -81,7 +81,7 @@ class _WriteReviewState extends State<WriteReview> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: AppBloc.userCubit.state!.image,
+                          imageUrl: AppBloc.userCubit.state!.profileImage,
                           imageBuilder: (context, imageProvider) {
                             return Container(
                               width: 60,

@@ -16,18 +16,19 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     UserModel? user = await AppBloc.userCubit.onLoadUser();
 
     if (user != null) {
+      //todo por el momento no necesito firebase
       ///Attach token push
-      Application.device?.token = await UtilOther.getDeviceToken();
+      //Application.device?.token = await UtilOther.getDeviceToken();
 
       ///Save user
       await AppBloc.userCubit.onSaveUser(user);
 
       ///Valid token server
-      final result = await UserRepository.validateToken();
+      final result = /*await UserRepository.validateToken()*/ true;
 
       if (result) {
         ///Load wishList
-        AppBloc.wishListCubit.onLoad();
+        //AppBloc.wishListCubit.onLoad();
 
         ///Fetch user
         AppBloc.userCubit.onFetchUser();

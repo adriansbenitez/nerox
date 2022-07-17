@@ -32,9 +32,9 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     ThemeModel? theme;
 
     ///Setup domain
-    if (oldDomain != null) {
+   /* if (oldDomain != null) {
       Application.domain = oldDomain;
-    }
+    }*/
 
     ///Setup Language
     if (oldLanguage != null) {
@@ -73,14 +73,14 @@ class ApplicationCubit extends Cubit<ApplicationState> {
     final results = await Future.wait([
       PackageInfo.fromPlatform(),
       UtilOther.getDeviceInfo(),
-      Firebase.initializeApp(),
+      //Firebase.initializeApp(),
     ]);
     Application.packageInfo = results[0] as PackageInfo;
     Application.device = results[1] as DeviceModel;
-    final setting = await ListRepository.loadSetting();
+    /*final setting = await ListRepository.loadSetting();
     if (setting != null) {
       Application.setting = setting;
-    }
+    }*/
 
     ///Setup Theme & Font with dark Option
     /*AppBloc.themeCubit.onChangeTheme(

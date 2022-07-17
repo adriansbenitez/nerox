@@ -126,7 +126,7 @@ class AppCommentItem extends StatelessWidget {
               InkWell(
                 onTap: onPressUser,
                 child: CachedNetworkImage(
-                  imageUrl: item!.user.image,
+                  imageUrl: item!.user.profileImage,
                   imageBuilder: (context, imageProvider) {
                     return Container(
                       width: 48,

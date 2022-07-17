@@ -23,18 +23,21 @@ class ResultApiModel {
     UserModel? user;
     PaginationModel? pagination;
     String message = 'Unknown';
+    bool isSuccess = true;
 
-    if (json['user'] != null) {
-      user = UserModel.fromJson(json['user']);
+    if (json['message'] == null) {
+      user = UserModel.fromJson(json);
+      message = "save_data_success";
+    } else {
+      isSuccess = json['success']?? false;
     }
+
     if (json['pagination'] != null) {
       pagination = PaginationModel.fromJson(json['pagination']);
     }
-    if (json['success'] == true) {
-      message = "save_data_success";
-    }
+
     return ResultApiModel(
-      success: json['success'] ?? false,
+      success: isSuccess,
       data: json['data'],
       pagination: pagination,
       attr: json['attr'],

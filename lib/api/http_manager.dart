@@ -13,10 +13,10 @@ class HTTPManager {
     ///Dio
     _dio = Dio(
       BaseOptions(
-        baseUrl: '${Application.domain}/index.php/wp-json',
+        baseUrl: Application.domain,
         connectTimeout: 30000,
         receiveTimeout: 30000,
-        contentType: Headers.formUrlEncodedContentType,
+        contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
       ),
     );

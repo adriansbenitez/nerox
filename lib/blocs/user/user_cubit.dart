@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:listar_flutter_pro/models/model.dart';
+import 'package:listar_flutter_pro/repository/customer_repository.dart';
 import 'package:listar_flutter_pro/repository/repository.dart';
+
+import '../../models/model_customer.dart';
 
 class UserCubit extends Cubit<UserModel?> {
   UserCubit() : super(null);
@@ -16,17 +19,20 @@ class UserCubit extends Cubit<UserModel?> {
   ///Event fetch user
   Future<UserModel?> onFetchUser() async {
     UserModel? local = await UserRepository.loadUser();
-    UserModel? remote = await UserRepository.fetchUser();
-    if (local != null && remote != null) {
-      final sync = local.updateUser(
+    //UserModel? remote = await UserRepository.fetchUser();
+    if (local != null/* && remote != null*/) {
+     /* final sync = local.updateUser(
         name: remote.name,
         email: remote.email,
-        url: remote.url,
-        description: remote.description,
-        image: remote.image,
-      );
-      onSaveUser(sync);
-      return sync;
+      );*/
+
+      if (local.isPaciente) {
+        CustomerModel? remoteCustomer = await CustomerRepository.getCustomer(id : local.id);
+        local.updateCustomer(remoteCustomer!);
+      }
+
+      onSaveUser(local);
+      return local;
     }
     return null;
   }
@@ -39,7 +45,7 @@ class UserCubit extends Cubit<UserModel?> {
 
   ///Event delete user
   void onDeleteUser() {
-    FirebaseMessaging.instance.deleteToken();
+    //FirebaseMessaging.instance.deleteToken();
     UserRepository.deleteUser();
     emit(null);
   }
@@ -47,18 +53,22 @@ class UserCubit extends Cubit<UserModel?> {
   ///Event update user
   Future<bool> onUpdateUser({
     required String name,
+    required String lastName,
     required String email,
-    required String url,
+    required String phoneNumber,
+    required String gender,
     required String description,
-    ImageModel? image,
+    required int id,
   }) async {
     ///Fetch change profile
     final result = await UserRepository.changeProfile(
       name: name,
+      lastName: lastName,
       email: email,
-      url: url,
+      phoneNumber: phoneNumber,
+      gender: gender,
       description: description,
-      imageID: image?.id,
+      id: id,
     );
 
     ///Case success
