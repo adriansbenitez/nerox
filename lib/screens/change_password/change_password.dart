@@ -14,13 +14,16 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  final _textPassController = TextEditingController();
-  final _textRePassController = TextEditingController();
-  final _focusPass = FocusNode();
-  final _focusRePass = FocusNode();
 
-  String? _errorPass;
-  String? _errorRePass;
+  final user = AppBloc.userCubit.state!;
+
+  final _textCurrentPassController = TextEditingController();
+  final _textNewPassController = TextEditingController();
+  final _focusCurrentPass = FocusNode();
+  final _focusNewPass = FocusNode();
+
+  String? _errorCurrentPass;
+  String? _errorNewPass;
 
   @override
   void initState() {
@@ -29,10 +32,10 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   void dispose() {
-    _textPassController.dispose();
-    _textRePassController.dispose();
-    _focusPass.dispose();
-    _focusRePass.dispose();
+    _textCurrentPassController.dispose();
+    _textNewPassController.dispose();
+    _focusCurrentPass.dispose();
+    _focusNewPass.dispose();
     super.dispose();
   }
 
@@ -40,17 +43,18 @@ class _ChangePasswordState extends State<ChangePassword> {
   void _changePassword() async {
     UtilOther.hiddenKeyboard(context);
     setState(() {
-      _errorPass = UtilValidator.validate(
-        _textPassController.text,
+      _errorCurrentPass = UtilValidator.validate(
+        _textCurrentPassController.text,
       );
-      _errorRePass = UtilValidator.validate(
-        _textRePassController.text,
-        match: _textPassController.text,
+      _errorNewPass = UtilValidator.validate(
+        _textNewPassController.text,
       );
     });
-    if (_errorPass == null && _errorRePass == null) {
+    if (_errorCurrentPass == null && _errorNewPass == null) {
       final result = await AppBloc.userCubit.onChangePassword(
-        _textPassController.text,
+        _textCurrentPassController.text,
+        _textNewPassController.text,
+          user.id
       );
       if (!mounted) return;
       if (result) {
@@ -64,6 +68,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
         title: Text(
           Translate.of(context).translate('change_password'),
         ),
@@ -88,32 +94,32 @@ class _ChangePasswordState extends State<ChangePassword> {
                   hintText: Translate.of(context).translate(
                     'input_your_password',
                   ),
-                  errorText: _errorPass,
-                  focusNode: _focusPass,
+                  errorText: _errorCurrentPass,
+                  focusNode: _focusCurrentPass,
                   textInputAction: TextInputAction.next,
                   obscureText: true,
                   trailing: GestureDetector(
                     dragStartBehavior: DragStartBehavior.down,
                     onTap: () {
-                      _textPassController.clear();
+                      _textCurrentPassController.clear();
                     },
                     child: const Icon(Icons.clear),
                   ),
                   onSubmitted: (text) {
                     UtilOther.fieldFocusChange(
                       context,
-                      _focusPass,
-                      _focusRePass,
+                      _focusCurrentPass,
+                      _focusNewPass,
                     );
                   },
                   onChanged: (text) {
                     setState(() {
-                      _errorPass = UtilValidator.validate(
-                        _textPassController.text,
+                      _errorCurrentPass = UtilValidator.validate(
+                        _textCurrentPassController.text,
                       );
                     });
                   },
-                  controller: _textPassController,
+                  controller: _textCurrentPassController,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -129,14 +135,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                   hintText: Translate.of(context).translate(
                     'confirm_your_password',
                   ),
-                  errorText: _errorRePass,
-                  focusNode: _focusRePass,
+                  errorText: _errorNewPass,
+                  focusNode: _focusNewPass,
                   textInputAction: TextInputAction.done,
                   obscureText: true,
                   trailing: GestureDetector(
                     dragStartBehavior: DragStartBehavior.down,
                     onTap: () {
-                      _textRePassController.clear();
+                      _textNewPassController.clear();
                     },
                     child: const Icon(Icons.clear),
                   ),
@@ -145,16 +151,16 @@ class _ChangePasswordState extends State<ChangePassword> {
                   },
                   onChanged: (text) {
                     setState(() {
-                      _errorRePass = UtilValidator.validate(
-                        _textRePassController.text,
+                      _errorNewPass = UtilValidator.validate(
+                        _textNewPassController.text,
                       );
                     });
                   },
-                  controller: _textRePassController,
+                  controller: _textNewPassController,
                 ),
                 const SizedBox(height: 16),
                 AppButton(
-                  Translate.of(context).translate('confirm'),
+                  Translate.of(context).translate('update'),
                   mainAxisSize: MainAxisSize.max,
                   onPressed: _changePassword,
                 ),

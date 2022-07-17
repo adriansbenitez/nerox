@@ -46,10 +46,12 @@ class UserRepository {
 
   ///Fetch api change Password
   static Future<bool> changePassword({
-    required String password,
+    required String oldpassword,
+    required String newpassword,
+    required int userId,
   }) async {
-    final Map<String, dynamic> params = {"password": password};
-    final response = await Api.requestChangePassword(params);
+    final Map<String, dynamic> params = {"oldpassword": oldpassword, "newpassword": newpassword};
+    final response = await Api.requestChangePassword(params, userId) ;
     AppBloc.messageCubit.onShow(response.message);
     if (response.success) {
       return true;

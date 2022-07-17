@@ -16,13 +16,13 @@ class Api {
   static const String login = "/api/auth/login";
   static const String customer = "/api/customers";
   static const String customerChangeImage = "/api/gateway/media";
+  static const String changePassword = "/api/user/:userId/changepwd";
 
   /*DEPRECATED*/
   static const String authValidate = "/jwt-auth/v1/token/validate";
   static const String user = "/listar/v1/auth/user";
   static const String register = "/listar/v1/auth/register";
   static const String forgotPassword = "/listar/v1/auth/reset_password";
-  static const String changePassword = "/wp/v2/users/me";
   static const String changeProfile = "/wp/v2/users/me";
   static const String setting = "/listar/v1/setting/init";
   static const String submitSetting = "/listar/v1/place/form";
@@ -148,15 +148,15 @@ class Api {
   }
 
   ///change password
-  static Future<ResultApiModel> requestChangePassword(params) async {
+  static Future<ResultApiModel> requestChangePassword(params, userId) async {
     final result = await httpManager.post(
-      url: changePassword,
+      url: changePassword.replaceFirst(":userId", userId.toString()),
       data: params,
       loading: true,
     );
     final convertResponse = {
-      "success": result['code'] == null,
-      "message": result['code'] ?? "change_password_success",
+      "success": result['response'] != null,
+      "message": result['message'] ?? "change_password_success",
       "data": result
     };
     return ResultApiModel.fromJson(convertResponse);

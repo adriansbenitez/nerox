@@ -79,8 +79,8 @@ class UserCubit extends Cubit<UserModel?> {
   }
 
   ///Event change password
-  Future<bool> onChangePassword(String password) async {
-    return await UserRepository.changePassword(password: password);
+  Future<bool> onChangePassword(String oldPassword, String newPassword, int userId) async {
+    return await UserRepository.changePassword(oldpassword: oldPassword, newpassword: newPassword, userId: userId);
   }
 
   ///Event register

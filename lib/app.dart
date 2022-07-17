@@ -56,6 +56,9 @@ class _AppState extends State<App> {
                           backgroundColor: Theme.of(context).primaryColor,
                           content: Text(
                             Translate.of(context).translate(message),
+                            style: const TextStyle(
+                              color: Colors.white
+                            ),
                           ),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
