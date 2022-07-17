@@ -29,8 +29,6 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-    _textIDController.text = "paul";
-    _textPassController.text = "123456@listar";
   }
 
   @override

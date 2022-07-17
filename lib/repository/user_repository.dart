@@ -1,25 +1,35 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:listar_flutter_pro/api/api.dart';
 import 'package:listar_flutter_pro/blocs/bloc.dart';
 import 'package:listar_flutter_pro/configs/config.dart';
 import 'package:listar_flutter_pro/models/model.dart';
 
 class UserRepository {
+
+
   ///Fetch api login
   static Future<UserModel?> login({
     required String username,
     required String password,
   }) async {
+    UserModel? userModel;
     final Map<String, dynamic> params = {
-      "username": username,
+      "email": username,
       "password": password,
     };
     final response = await Api.requestLogin(params);
 
     if (response.success) {
-      return UserModel.fromJson(response.data);
+      userModel = UserModel.fromSource(response.user);
+      await AppBloc.userCubit.onSaveUser(userModel);
+
+      if (userModel.isPaciente) {
+        userModel.customerModel= await Api.getCustomer(userModel.id);
+      }
+      return userModel;
     }
+
     AppBloc.messageCubit.onShow(response.message);
     return null;
   }
@@ -79,22 +89,23 @@ class UserRepository {
 
   ///Fetch api forgot Password
   static Future<bool> changeProfile({
+    required int id,
     required String name,
+    required String lastName,
     required String email,
-    required String url,
+    required String phoneNumber,
+    required String gender,
     required String description,
-    int? imageID,
   }) async {
     Map<String, dynamic> params = {
-      "name": name,
+      "first_name": name,
+      "last_name": lastName,
       "email": email,
-      "url": url,
-      "description": description,
+      "phone_number": phoneNumber,
+      "gender": gender,
+      "notes": description,
     };
-    if (imageID != null) {
-      params['listar_user_photo'] = imageID;
-    }
-    final response = await Api.requestChangeProfile(params);
+    final response = await Api.updateCustomer(id, params);
     AppBloc.messageCubit.onShow(response.message);
 
     ///Case success
@@ -135,4 +146,9 @@ class UserRepository {
   static Future<bool> deleteUser() async {
     return await Preferences.remove(Preferences.user);
   }
+
+  ///Save Image
+  static Future<ResultApiModel> uploadProfileUser( File file, String sourceType, int sourceId, progress) async {
+     return await Api.requestChangeImage(file, sourceType,sourceId, progress);
+   }
 }

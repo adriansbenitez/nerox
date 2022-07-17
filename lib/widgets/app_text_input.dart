@@ -16,6 +16,7 @@ class AppTextInput extends StatelessWidget {
   final String? errorText;
   final int? maxLines;
   final bool? autofocus;
+  final bool? enabled;
 
   const AppTextInput({
     Key? key,
@@ -33,6 +34,7 @@ class AppTextInput extends StatelessWidget {
     this.errorText,
     this.maxLines = 1,
     this.autofocus = false,
+    this.enabled = true
   }) : super(key: key);
 
   Widget _buildErrorLabel(BuildContext context) {
@@ -112,6 +114,7 @@ class AppTextInput extends StatelessWidget {
                   onTap: onTap,
                   textAlignVertical: TextAlignVertical.center,
                   onSubmitted: onSubmitted,
+                  enabled: enabled,
                   controller: controller,
                   focusNode: focusNode,
                   onChanged: onChanged,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:listar_flutter_pro/blocs/bloc.dart';
 import 'package:listar_flutter_pro/configs/config.dart';
@@ -93,8 +94,48 @@ class _AccountState extends State<Account> {
 
   ///On logout
   void _onLogout() async {
-    _showInterstitialAd();
-    AppBloc.loginCubit.onLogout();
+    dialogLogout();
+  }
+
+  Future<void> dialogLogout() async {
+    final bool? isLogout = await onSelectDiaglog();
+    if (isLogout!) {
+      _showInterstitialAd();
+      AppBloc.loginCubit.onLogout();
+    }
+  }
+
+  ///On Select Color
+  Future<bool?> onSelectDiaglog() async {
+    return await showDialog<bool?>(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        bool isClose = false;
+        return AlertDialog(
+          title: const Text('Informacion'), //TODO internacionalizar,
+          content: const Text('Estas seguro de salir?'),
+          elevation: 3,
+          actions: <Widget>[
+            AppButton(
+              Translate.of(context).translate('close'),
+              onPressed: () {
+                Navigator.pop(context, isClose);
+              },
+              type: ButtonType.text,
+            ),
+            AppButton(
+              Translate.of(context).translate('apply'),
+              onPressed: () {
+                isClose = true;
+                Navigator.pop(context, isClose);
+              },
+              type: ButtonType.text,
+            ),
+          ],
+        );
+      },
+    );
   }
 
   ///On navigation
@@ -123,16 +164,18 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
         centerTitle: true,
         title: Text(
           Translate.of(context).translate('account'),
         ),
         actions: [
           AppButton(
-            Translate.of(context).translate('sign_out'),
+            "",
             mainAxisSize: MainAxisSize.max,
             onPressed: _onLogout,
-            type: ButtonType.text,
+            icon: const Icon(Icons.logout, color: Colors.white),
           )
         ],
       ),

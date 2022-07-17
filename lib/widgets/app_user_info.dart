@@ -64,20 +64,21 @@ class AppUserInfo extends StatelessWidget {
           );
         }
         Widget description = Container();
-        if(user!.description.isNotEmpty){
+        //todo revisar aca
+        /*if(user!.description.isNotEmpty){
           description = Column(crossAxisAlignment: CrossAxisAlignment.start,children: [const SizedBox(height: 4),
             Text(
               user!.description,
               maxLines: 1,
               style: Theme.of(context).textTheme.caption,
             ),],);
-        }
+        }*/
         return InkWell(
           onTap: onPressed,
           child: Row(
             children: <Widget>[
               CachedNetworkImage(
-                imageUrl: user!.image,
+                imageUrl: user!.profileImage,
                 imageBuilder: (context, imageProvider) {
                   return Container(
                     width: 60,
@@ -133,7 +134,7 @@ class AppUserInfo extends StatelessWidget {
                     description,
                     const SizedBox(height: 4),
                     Text(
-                      user!.nickname,
+                      user!.email,
                       maxLines: 1,
                       style: Theme.of(context).textTheme.caption,
                     ),
@@ -193,7 +194,7 @@ class AppUserInfo extends StatelessWidget {
           child: Row(
             children: <Widget>[
               CachedNetworkImage(
-                imageUrl: user!.image,
+                imageUrl: user!.profileImage,
                 placeholder: (context, url) {
                   return AppPlaceholder(
                     child: Container(

@@ -22,8 +22,9 @@ class LoginCubit extends Cubit<LoginState> {
     ///Notify
     emit(LoginState.loading);
 
+    // No es necesario obtener el token
     ///Set Device Token
-    Application.device?.token = await UtilOther.getDeviceToken();
+    //Application.device?.token = await UtilOther.getDeviceToken();
 
     ///login via repository
     final result = await UserRepository.login(

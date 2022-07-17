@@ -86,6 +86,10 @@ class UtilOther {
     return params;
   }
 
+  static String getSourceType(bool isCustomer) {
+    return isCustomer ? 'customer' : 'staff' ;
+  }
+
   ///Singleton factory
   static final UtilOther _instance = UtilOther._internal();
 

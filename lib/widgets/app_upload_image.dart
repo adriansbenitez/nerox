@@ -7,6 +7,8 @@ import 'package:listar_flutter_pro/blocs/bloc.dart';
 import 'package:listar_flutter_pro/models/model.dart';
 import 'package:listar_flutter_pro/repository/repository.dart';
 
+import '../utils/other.dart';
+
 enum UploadImageType { circle, square }
 
 class AppUploadImage extends StatefulWidget {
@@ -37,6 +39,8 @@ class _AppUploadImageState extends State<AppUploadImage> {
   bool _completed = false;
   bool showAction = false;
 
+  final user = AppBloc.userCubit.state!;
+
   @override
   void initState() {
     super.initState();
@@ -64,7 +68,10 @@ class _AppUploadImageState extends State<AppUploadImage> {
         _completed = false;
         _file = File(pickedFile.path);
       });
-      final response = await ListRepository.uploadImage(_file!, (percent) {
+      final response = await UserRepository.uploadProfileUser(
+          _file!,
+          UtilOther.getSourceType(user.isPaciente),
+          user.customerModel.id, (percent) {
         setState(() {
           _percent = percent;
         });
@@ -73,7 +80,12 @@ class _AppUploadImageState extends State<AppUploadImage> {
         setState(() {
           _completed = true;
         });
-        final item = ImageModel.fromJsonUpload(response.data);
+        final item = ImageModel.fromDataImage(response.data);
+        if (item != null) {
+          UserModel currenUser = AppBloc.userCubit.state!;
+          currenUser.profileImage = item.full;
+          AppBloc.userCubit.onSaveUser(user);
+        }
         widget.onChange(item);
       } else {
         AppBloc.messageCubit.onShow(response.message);

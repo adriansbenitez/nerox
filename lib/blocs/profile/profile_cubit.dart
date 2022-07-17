@@ -42,7 +42,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         listProduct = result[0];
         pagination = result[1];
         user = result[2];
-        user!.updateUser(total: pagination!.total);
+        //todo revisar update user
+        //user!.updateUser(total: pagination!.total);
 
         ///Notify
         emit(ProfileSuccess(
@@ -71,7 +72,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         listProductPending = result[0];
         pagination = result[1];
         user = result[2];
-        user!.updateUser(total: pagination!.total);
+        //todo revisar update user
+        //user!.updateUser(total: pagination!.total);
 
         ///Notify
         emit(ProfileSuccess(
@@ -142,7 +144,8 @@ class ProfileCubit extends Cubit<ProfileState> {
           listProduct = result[0];
           pagination = result[1];
           user = result[2];
-          user!.updateUser(total: pagination!.total);
+          //todo revisar updateuser
+          //user!.updateUser(total: pagination!.total);
 
           ///Notify
           emit(ProfileSuccess(
@@ -171,7 +174,8 @@ class ProfileCubit extends Cubit<ProfileState> {
           listProductPending = result[0];
           pagination = result[1];
           user = result[2];
-          user!.updateUser(total: pagination!.total);
+          //todo revisar aca update user
+          //user!.updateUser(total: pagination!.total);
 
           ///Notify
           emit(ProfileSuccess(
@@ -248,7 +252,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         listProduct.addAll(result[0]);
         pagination = result[1];
         user = result[2];
-        user!.updateUser(total: pagination!.total);
+        //todo revisar updateuser
+        //user!.updateUser(total: pagination!.total);
 
         ///Notify
         emit(ProfileSuccess(
@@ -273,7 +278,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         listProductPending.addAll(result[0]);
         pagination = result[1];
         user = result[2];
-        user!.updateUser(total: pagination!.total);
+        //todo revisar update user
+        //user!.updateUser(total: pagination!.total);
 
         ///Notify
         emit(ProfileSuccess(

@@ -69,7 +69,8 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
     if (user != null) {
       String post = '';
       String review = '';
-      if (user!.total > 0) {
+      //todo revisar aca que paso!
+      /*if (user!.total > 0) {
         post = '${user!.total} ${Translate.of(context).translate('post')},';
       }
       if (user!.rate > 0) {
@@ -93,7 +94,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
             ),
           ],
         );
-      }
+      } */
       if (showQR) {
         action = IconButton(
           onPressed: onQRCode,
@@ -114,7 +115,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(user!.image),
+                    image: NetworkImage(user!.profileImage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -128,7 +129,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                   color: Theme.of(context).primaryColor,
                 ),
                 child: Text(
-                  '${user!.rate}',
+                  '${user!.id}',
                   style: const TextStyle(fontSize: 10, color: Colors.white),
                 ),
               )
@@ -157,7 +158,7 @@ class ProfileHeader extends SliverPersistentHeaderDelegate {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RatingBar.builder(
-                          initialRating: user!.rate,
+                          initialRating:1.5 /*user!.id*/,
                           minRating: 1,
                           allowHalfRating: true,
                           unratedColor: Colors.amber.withAlpha(100),

@@ -53,6 +53,7 @@ class _AppState extends State<App> {
                     listener: (context, message) {
                       if (message != null) {
                         final snackBar = SnackBar(
+                          backgroundColor: Theme.of(context).primaryColor,
                           content: Text(
                             Translate.of(context).translate(message),
                           ),

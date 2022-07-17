@@ -6,6 +6,8 @@ import 'package:listar_flutter_pro/models/model.dart';
 import 'package:listar_flutter_pro/utils/utils.dart';
 import 'package:listar_flutter_pro/widgets/widget.dart';
 
+import '../../widgets/app_dropdown_item.dart';
+
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
 
@@ -17,29 +19,39 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _textNameController = TextEditingController();
+  final _textLastNameController = TextEditingController();
   final _textEmailController = TextEditingController();
-  final _textWebsiteController = TextEditingController();
+  final _textPhoneController = TextEditingController();
   final _textInfoController = TextEditingController();
+  late String _genderSelected;
+
+
   final _focusName = FocusNode();
+  final _focusLasName = FocusNode();
   final _focusEmail = FocusNode();
-  final _focusWebsite = FocusNode();
+  final _focusPhone = FocusNode();
   final _focusInfo = FocusNode();
+  final _focusGender = FocusNode();
   final picker = ImagePicker();
 
   ImageModel? _image;
   String? _errorName;
+  String? _errorLastName;
   String? _errorEmail;
-  String? _errorWebsite;
+  String? _errorPhone;
   String? _errorInfo;
+
+  final user = AppBloc.userCubit.state!;
 
   @override
   void initState() {
     super.initState();
-    final user = AppBloc.userCubit.state!;
-    _textNameController.text = user.name;
+    _textNameController.text = user.customerModel.nombre;
+    _textLastNameController.text = user.customerModel.apellidos;
     _textEmailController.text = user.email;
-    _textWebsiteController.text = user.url;
-    _textInfoController.text = user.description;
+    _textPhoneController.text = user.customerModel.mobile;
+    _textInfoController.text = user.customerModel.notes;
+    _genderSelected = user.customerModel.gender; //TODO internacionalizar;
   }
 
   @override
@@ -52,24 +64,28 @@ class _EditProfileState extends State<EditProfile> {
     UtilOther.hiddenKeyboard(context);
     setState(() {
       _errorName = UtilValidator.validate(_textNameController.text);
+      _errorLastName = UtilValidator.validate(_textLastNameController.text);
       _errorEmail = UtilValidator.validate(
         _textEmailController.text,
         type: ValidateType.email,
       );
-      _errorWebsite = UtilValidator.validate(_textWebsiteController.text);
+      _errorPhone = UtilValidator.validate(_textPhoneController.text);
       _errorInfo = UtilValidator.validate(_textInfoController.text);
     });
     if (_errorName == null &&
+        _errorLastName == null &&
         _errorEmail == null &&
-        _errorWebsite == null &&
+        _errorPhone == null &&
         _errorInfo == null) {
       ///Fetch change profile
       final result = await AppBloc.userCubit.onUpdateUser(
         name: _textNameController.text,
+        lastName: _textLastNameController.text,
         email: _textEmailController.text,
-        url: _textWebsiteController.text,
+        phoneNumber: _textPhoneController.text,
+        gender: _genderSelected,
         description: _textInfoController.text,
-        image: _image,
+        id: user.customerModel.id
       );
 
       ///Case success
@@ -84,6 +100,8 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
         centerTitle: true,
         title: Text(Translate.of(context).translate('edit_profile')),
       ),
@@ -104,7 +122,7 @@ class _EditProfileState extends State<EditProfile> {
                           type: UploadImageType.circle,
                           image: ImageModel(
                             id: 0,
-                            full: AppBloc.userCubit.state!.image,
+                            full: AppBloc.userCubit.state!.profileImage,
                           ),
                           onChange: (result) {
                             setState(() {
@@ -154,6 +172,43 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   const SizedBox(height: 16),
                   Text(
+                    'Apellidos', //TODO traducir
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  AppTextInput(
+                    hintText: 'Apellidos', //TODO traducir
+                    errorText: _errorLastName,
+                    focusNode: _focusLasName,
+                    textInputAction: TextInputAction.next,
+                    trailing: GestureDetector(
+                      dragStartBehavior: DragStartBehavior.down,
+                      onTap: () {
+                        _textLastNameController.clear();
+                      },
+                      child: const Icon(Icons.clear),
+                    ),
+                    onSubmitted: (text) {
+                      UtilOther.fieldFocusChange(
+                        context,
+                        _focusName,
+                        _focusEmail,
+                      );
+                    },
+                    onChanged: (text) {
+                      setState(() {
+                        _errorLastName = UtilValidator.validate(
+                          _textLastNameController.text,
+                        );
+                      });
+                    },
+                    controller: _textLastNameController,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
                     Translate.of(context).translate('email'),
                     style: Theme.of(context)
                         .textTheme
@@ -177,7 +232,7 @@ class _EditProfileState extends State<EditProfile> {
                       UtilOther.fieldFocusChange(
                         context,
                         _focusEmail,
-                        _focusWebsite,
+                        _focusPhone,
                       );
                     },
                     onChanged: (text) {
@@ -190,10 +245,11 @@ class _EditProfileState extends State<EditProfile> {
                     },
                     controller: _textEmailController,
                     keyboardType: TextInputType.emailAddress,
+                    enabled: false,
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    Translate.of(context).translate('website'),
+                    Translate.of(context).translate('phone'),
                     style: Theme.of(context)
                         .textTheme
                         .subtitle2!
@@ -202,33 +258,59 @@ class _EditProfileState extends State<EditProfile> {
                   const SizedBox(height: 8),
                   AppTextInput(
                     hintText: Translate.of(context).translate(
-                      'input_website',
+                      'input_phone',
                     ),
-                    errorText: _errorWebsite,
-                    focusNode: _focusWebsite,
+                    errorText: _errorPhone,
+                    focusNode: _focusPhone,
                     textInputAction: TextInputAction.next,
                     trailing: GestureDetector(
                       dragStartBehavior: DragStartBehavior.down,
                       onTap: () {
-                        _textWebsiteController.clear();
+                        _textPhoneController.clear();
                       },
                       child: const Icon(Icons.clear),
                     ),
                     onSubmitted: (text) {
                       UtilOther.fieldFocusChange(
                         context,
-                        _focusWebsite,
+                        _focusPhone,
                         _focusInfo,
                       );
                     },
                     onChanged: (text) {
                       setState(() {
-                        _errorWebsite = UtilValidator.validate(
-                          _textWebsiteController.text,
+                        _errorPhone = UtilValidator.validate(
+                          _textPhoneController.text,
                         );
                       });
                     },
-                    controller: _textWebsiteController,
+                    controller: _textPhoneController,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Sexo',//TODO internacionalizar
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  AppDropdownItem(
+                    selected: _genderSelected,
+                    focusNode: _focusGender,
+                    onSubmitted: (text) {
+                      UtilOther.fieldFocusChange(
+                        context,
+                        _focusPhone,
+                        _focusInfo,
+                      );
+                    },
+                    onChanged: (newGender) {
+                      setState(() {
+                        _genderSelected = newGender!;
+                      });
+                    },
                   ),
                   const SizedBox(height: 16),
                   Text(
