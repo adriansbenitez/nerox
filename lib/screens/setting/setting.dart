@@ -201,6 +201,8 @@ class _SettingState extends State<Setting> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.white,
         title: Text(
           Translate.of(context).translate('setting'),
         ),
