@@ -71,17 +71,17 @@ class UserRepository {
   }
 
   ///Fetch api register account
-  static Future<bool> register({
-    required String username,
+  static Future<bool> registerCustomer({
     required String password,
     required String email,
+    required String userName,
   }) async {
     final Map<String, dynamic> params = {
-      "username": username,
       "password": password,
       "email": email,
+      "user": userName,
     };
-    final response = await Api.requestRegister(params);
+    final response = await Api.requestRegisterCustomer(params);
     AppBloc.messageCubit.onShow(response.message);
     if (response.success) {
       return true;

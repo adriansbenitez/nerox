@@ -84,15 +84,15 @@ class UserCubit extends Cubit<UserModel?> {
   }
 
   ///Event register
-  Future<bool> onRegister({
-    required String username,
+  Future<bool> onRegisterCustomer({
     required String password,
     required String email,
+    required String userName,
   }) async {
-    return await UserRepository.register(
-      username: username,
+    return await UserRepository.registerCustomer(
       password: password,
       email: email,
+      userName: userName,
     );
   }
 

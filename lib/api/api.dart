@@ -18,11 +18,11 @@ class Api {
   static const String customerChangeImage = "/api/gateway/media";
   static const String changePassword = "/api/user/:userId/changepwd";
   static const String forgotPassword = "/api/password/email";
+  static const String registerCustomer = "/api/customers";
 
   /*DEPRECATED*/
   static const String authValidate = "/jwt-auth/v1/token/validate";
   static const String user = "/listar/v1/auth/user";
-  static const String register = "/listar/v1/auth/register";
   static const String changeProfile = "/wp/v2/users/me";
   static const String setting = "/listar/v1/setting/init";
   static const String submitSetting = "/listar/v1/place/form";
@@ -118,14 +118,14 @@ class Api {
   }
 
   ///Register account
-  static Future<ResultApiModel> requestRegister(params) async {
+  static Future<ResultApiModel> requestRegisterCustomer(params) async {
     final result = await httpManager.post(
-      url: register,
+      url: registerCustomer,
       data: params,
       loading: true,
     );
     final convertResponse = {
-      "success": result['code'] == 200,
+      "success": result['code'] == 201,
       "message": result['message'],
       "data": result
     };
