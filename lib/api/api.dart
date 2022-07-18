@@ -17,12 +17,12 @@ class Api {
   static const String customer = "/api/customers";
   static const String customerChangeImage = "/api/gateway/media";
   static const String changePassword = "/api/user/:userId/changepwd";
+  static const String forgotPassword = "/api/password/email";
 
   /*DEPRECATED*/
   static const String authValidate = "/jwt-auth/v1/token/validate";
   static const String user = "/listar/v1/auth/user";
   static const String register = "/listar/v1/auth/register";
-  static const String forgotPassword = "/listar/v1/auth/reset_password";
   static const String changeProfile = "/wp/v2/users/me";
   static const String setting = "/listar/v1/setting/init";
   static const String submitSetting = "/listar/v1/place/form";
@@ -113,7 +113,7 @@ class Api {
       data: params,
       loading: true,
     );
-    result['message'] = result['code'] ?? result['msg'];
+    result['message'] = result['code'] ?? result['message'];
     return ResultApiModel.fromJson(result);
   }
 
