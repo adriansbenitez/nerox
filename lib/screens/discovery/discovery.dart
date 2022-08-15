@@ -25,7 +25,7 @@ class _DiscoveryState extends State<Discovery> {
   @override
   void initState() {
     super.initState();
-    _discoveryCubit.onLoad();
+    //_discoveryCubit.onLoad();
     _submitSubscription = AppBloc.submitCubit.stream.listen((state) {
       if (state is Submitted) {
         _onRefresh();

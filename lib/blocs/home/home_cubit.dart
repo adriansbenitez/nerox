@@ -9,35 +9,36 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> onLoad() async {
     ///Fetch API Home
-    final response = await Api.requestHome();
-    if (response.success) {
-      final banner = List<String>.from(response.data['sliders'] ?? []);
+    if (true) {
+      //final banner = List<String>.from(response.data['sliders'] ?? []);
 
-      final category = List.from(response.data['categories'] ?? []).map((item) {
+      final category = await onLoadCategory();
+
+      /*final location = List.from(response.data['locations'] ?? []).map((item) {
         return CategoryModel.fromJson(item);
-      }).toList();
+      }).toList();*/
 
-      final location = List.from(response.data['locations'] ?? []).map((item) {
-        return CategoryModel.fromJson(item);
-      }).toList();
-
-      final recent = List.from(response.data['recent_posts'] ?? []).map((item) {
+      /*final recent = List.from(response.data['recent_posts'] ?? []).map((item) {
         return ProductModel.fromJson(
           item,
           setting: Application.setting,
         );
-      }).toList();
+      }).toList();*/
 
       ///Notify
       emit(HomeSuccess(
-        banner: banner,
+        banner: [],
         category: category,
-        location: location,
-        recent: recent,
+        location: [],
+        recent: [],
       ));
-    } else {
-      ///Notify
-      AppBloc.messageCubit.onShow(response.message);
     }
+  }
+
+  Future<List<CategoryModel>> onLoadCategory() async {
+    final response = await Api.getCategories();
+    return List.from(response.data ?? []).map((item) {
+      return CategoryModel.fromJson(item);
+    }).toList();
   }
 }

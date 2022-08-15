@@ -19,6 +19,7 @@ class Api {
   static const String changePassword = "/api/user/:userId/changepwd";
   static const String forgotPassword = "/api/password/email";
   static const String registerCustomer = "/api/customers";
+  static const String categories = "/api/categories";
 
   /*DEPRECATED*/
   static const String authValidate = "/jwt-auth/v1/token/validate";
@@ -27,7 +28,6 @@ class Api {
   static const String setting = "/listar/v1/setting/init";
   static const String submitSetting = "/listar/v1/place/form";
   static const String home = "/listar/v1/home/init";
-  static const String categories = "/listar/v1/category/list";
   static const String discovery = "/listar/v1/category/list_discover";
   static const String withLists = "/listar/v1/wishlist/list";
   static const String addWishList = "/listar/v1/wishlist/save";
@@ -95,6 +95,33 @@ class Api {
     return ResultApiModel.fromJson(convertResponse);
   }
 
+  ///Register account
+  static Future<ResultApiModel> requestRegisterCustomer(params) async {
+    final result = await httpManager.post(
+      url: registerCustomer,
+      data: params,
+      loading: true,
+    );
+    final convertResponse = {
+      "success": result['code'] == 201,
+      "message": result['message'],
+      "data": result
+    };
+    return ResultApiModel.fromJson(convertResponse);
+  }
+
+  static Future<ResultApiModel> getCategories() async {
+    final result = await httpManager.get(
+      url: categories
+    );
+    final convertResponse = {
+      "success": result['code'] == 201,
+      "message": result['message'],
+      "data": result['response']
+    };
+    return ResultApiModel.fromJson(convertResponse);
+  }
+
 
   /*DEPRECATED*/
 
@@ -115,21 +142,6 @@ class Api {
     );
     result['message'] = result['code'] ?? result['message'];
     return ResultApiModel.fromJson(result);
-  }
-
-  ///Register account
-  static Future<ResultApiModel> requestRegisterCustomer(params) async {
-    final result = await httpManager.post(
-      url: registerCustomer,
-      data: params,
-      loading: true,
-    );
-    final convertResponse = {
-      "success": result['code'] == 201,
-      "message": result['message'],
-      "data": result
-    };
-    return ResultApiModel.fromJson(convertResponse);
   }
 
   ///Change Profile

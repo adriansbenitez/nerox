@@ -30,17 +30,17 @@ class CategoryModel {
   int get hashCode => id.hashCode;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    CategoryType categoryType = CategoryType.category;
+    //CategoryType categoryType = CategoryType.category;
     ImageModel? image;
-    if (json['image'] != null) {
-      image = ImageModel.fromJson(json['image']);
+    if (json['profile_image'] != null) {
+      image = ImageModel.fromDataImage(json['profile_image']);
     }
-    if (json['taxonomy'] == 'listar_feature') {
+    /*if (json['taxonomy'] == 'listar_feature') {
       categoryType = CategoryType.feature;
     }
     if (json['taxonomy'] == 'listar_location') {
       categoryType = CategoryType.location;
-    }
+    }*/
     final icon = UtilIcon.getIconFromCss(json['icon']);
     final color = UtilColor.getColorFromHex(json['color']);
     return CategoryModel(
@@ -50,7 +50,7 @@ class CategoryModel {
       image: image,
       icon: icon,
       color: color,
-      type: categoryType,
+     // type: categoryType,
     );
   }
 }
